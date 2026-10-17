@@ -1,11 +1,15 @@
+"use client"
+
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 interface DashboardLayoutProps {
     children: ReactNode
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+    const [text, setText] = useState("")
+
     return (
         <div className="
         flex
@@ -26,17 +30,33 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <span className="font-bold text-sm text-zinc-400">Навигация</span>
                     <Link 
                         href="/dashboard"
-                        className="hover:text-blue-600 transition-colors"
+                        className="text-black hover:text-blue-600 transition-colors"
                     >
                         Главная
                     </Link>
                     <Link
                         href="/dashboard/settings"
-                        className="hover:text-blue-600 transition-colors"
+                        className="text-black hover:text-blue-600 transition-colors"
                     >
                         Настройки
                     </Link>
                 </nav>
+
+                <div className="mt-auto pt-6 border-t border-blue-200">
+                    <label className="block text-[10px] font-bold text-blue-400 uppercase mb-2">
+                        Persistent State (Layout)
+                    </label>
+                    <input
+                        type="text"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        placeholder="Текст сохранился..."
+                        className="
+                            w-full p-2 text-sm border border-blue-200 rounded bg-white
+                            text-black focus:ring-2 focus:ring-blue-500 outline-none
+                        "
+                    />
+                </div>
             </aside>
 
             <main className="flex-1 flex flex-col bg-white text-black p-8">
