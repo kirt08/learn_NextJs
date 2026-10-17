@@ -10,3 +10,5 @@ export default function DashboardLoading() {
         </div>
     )
 }
+
+// w-5/6 - width: 83.(3)%, a good choice for uneven data simulation
