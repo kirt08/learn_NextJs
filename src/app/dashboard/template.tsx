@@ -48,3 +48,9 @@ export default function DashboardTemplate({children}: DashboardTemplateProps) {
         </div>
     )
 }
+
+// animate-in - enable animation on mount, create basic keyframe structure
+// fade-in - smoothly change opacity from 0 to 1
+// slide-in-from-bottom-2 - set the Y-offset to 2*0.25rem
+// duration-500 - animation time equals 500ms 
+// outline-none - disebale basic browser focus border (esspecially for input field)

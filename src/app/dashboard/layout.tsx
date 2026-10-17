@@ -74,3 +74,4 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 // upercase - transform all letters in uppercase format
 // tracking-widest - increases the letter spacing (distance between two letters)
 // font-sans - use standart font (sans-serif)
+// ring-2 - create shadow around element with size 2px, don't change geometry unlike border
