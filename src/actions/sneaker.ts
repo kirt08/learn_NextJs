@@ -42,3 +42,19 @@ export const createSneakerDrop = actionClient
             throw new Error(error.message || "Product wasn't created")
         }
     })
+
+const ToggleFavoriteSchema = z.object({
+    id: z.number(),
+})
+
+export const toggleFavorite = actionClient
+    .inputSchema(ToggleFavoriteSchema)
+    .action(async ({ parsedInput }) => {
+        await new Promise((resolve) => setTimeout(resolve, 500))
+
+        if (parsedInput.id === 2) {
+            throw new Error("Something go wrong")
+        }
+
+        return { success: true, id: parsedInput.id }
+    })
