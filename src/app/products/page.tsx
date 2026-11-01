@@ -1,6 +1,11 @@
 import { products } from "@/db/schema"
 import { db } from "@/lib/db"
+import { type Metadata } from "next"
 import { Suspense } from "react"
+
+export const metadata: Metadata = {
+    title: "Products",
+}
 
 async function ProductsList() {
     const items = await db.select().from(products).orderBy(products.createdAt)
