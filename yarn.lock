@@ -1259,6 +1259,7 @@ __metadata:
     postgres: "npm:^4.0.0"
     react: "npm:19.3.0"
     react-dom: "npm:19.3.0"
+    sharp: "npm:^0.35.5"
     tailwindcss: "npm:^4"
     tailwindcss-animate: "npm:^1.0.7"
     typescript: "npm:^5"
