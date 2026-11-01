@@ -1,3 +1,5 @@
+import { HeroBanner } from "@/components/forest-banner"
+
 async function getGithubProfile() {
     const res = await fetch("https://api.github.com/orgs/vercel", {
         cache: "force-cache",
@@ -11,11 +13,5 @@ async function getGithubProfile() {
 export default async function Home() {
     const data = await getGithubProfile()
 
-    return (
-        <main>
-            <h2>Profile: {data.name}</h2>
-            <p>Description: {data.description}</p>
-            <p>Public Repos: {data.public_repos}</p>
-        </main>
-    )
+    return <HeroBanner />
 }

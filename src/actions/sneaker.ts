@@ -1,5 +1,7 @@
 "use server"
 
+import { products } from "@/db/schema"
+import { db } from "@/lib/db"
 import { actionClient } from "@/lib/safe-action"
 import z from "zod"
 
@@ -18,27 +20,35 @@ export const createSneakerDrop = actionClient
         console.log("Payload: ", parsedInput)
 
         try {
-            const res = await fetch("https://dummyjson.com/products/add", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...parsedInput,
-                    category: "mens-shoes",
-                }),
-            })
+            const [newProduct] = await db
+                .insert(products)
+                .values({
+                    name: parsedInput.title,
+                    price: Math.round(parsedInput.price * 100),
+                    stock: parsedInput.stock,
+                })
+                .returning()
 
-            if (!res.ok) {
-                throw new Error(
-                    "The product wasn't created. Something went wrong"
-                )
-            }
-
-            const data = await res.json()
-
-            return { success: true, productId: data.id }
+            return { success: true, productId: newProduct.id }
         } catch (error: any) {
-            throw new Error(error.message || "Product wasn't created")
+            throw new Error(error.message || "Product wasn't created", {
+                cause: error.cause,
+            })
         }
+    })
+
+const ToggleFavoriteSchema = z.object({
+    id: z.number(),
+})
+
+export const toggleFavorite = actionClient
+    .inputSchema(ToggleFavoriteSchema)
+    .action(async ({ parsedInput }) => {
+        await new Promise((resolve) => setTimeout(resolve, 500))
+
+        if (parsedInput.id === 2) {
+            throw new Error("Something go wrong")
+        }
+
+        return { success: true, id: parsedInput.id }
     })
