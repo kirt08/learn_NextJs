@@ -1,19 +1,30 @@
 import "server-only"
 
-const MOCK_USERS = [
-    { id: 1, name: "Artem", email: "artem@gmail.com" },
-    { id: 2, name: "Arina", email: "arina@gmail.com" },
-    { id: 3, name: "Nikita", email: "nikita@gmail.com" },
-    { id: 4, name: "Dmitriy", email: "dmitriy@gmail.com" },
-]
+import postgres from "postgres"
+import { drizzle } from "drizzle-orm/postgres-js"
 
-export const db = {
-    query: {
-        users: {
-            findMany: async () => {
-                await new Promise((resolve) => setTimeout(resolve, 500))
-                return MOCK_USERS
-            },
-        },
-    },
+import * as schema from "@/db/schema"
+
+const connectionString = process.env.DATABASE_URL
+
+if (!connectionString) {
+    throw new Error("Database url wasn't found")
 }
+
+const globalForDb = globalThis as unknown as {
+    client: postgres.Sql | undefined
+}
+
+export const client =
+    globalForDb.client ??
+    postgres(connectionString, {
+        max: process.env.NODE_ENV === "production" ? 1 : 10,
+        idle_timeout: 30,
+        connect_timeout: 5,
+    })
+
+if (process.env.NODE_ENV === "development") {
+    globalForDb.client = client
+}
+
+export const db = drizzle(client, { schema })
