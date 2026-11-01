@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
     cacheComponents: true,
     partialPrefetching: true,
     reactCompiler: true,
+    output: "standalone",
+    poweredByHeader: false,
+    reactStrictMode: true,
+    productionBrowserSourceMaps: false,
+    compress: false,
+    generateEtags: false,
+    cleanDistDir: true,
     images: {
         unoptimized: false,
         formats: ["image/avif", "image/webp"],
