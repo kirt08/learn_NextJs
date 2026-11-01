@@ -31,7 +31,9 @@ export const createSneakerDrop = actionClient
 
             return { success: true, productId: newProduct.id }
         } catch (error: any) {
-            throw new Error(error.message || "Product wasn't created")
+            throw new Error(error.message || "Product wasn't created", {
+                cause: error.cause,
+            })
         }
     })
 
